@@ -2,43 +2,42 @@ package s171183.android1.hioa;
 
 import java.util.ArrayList;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class GameActivity extends Activity {
 
-//	private TextView wrongLettersView;
-//	private ArrayList<String> wrongChosenLetters, chosenLetters;
-	
-
 	private String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I",
 			"J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
 			"W", "X", "Y", "Z" };
+	
 	private ArrayList<String> lettersList = new ArrayList<String>();
 	
-	private int[] hungMen = { R.drawable.head, R.drawable.body,
-			R.drawable.left_arm, R.drawable.right_arm, R.drawable.right_leg,
-			R.drawable.left_left };
+	public static int[] hungMen = { R.drawable.head, R.drawable.body,
+			R.drawable.left_arm, R.drawable.right_arm, R.drawable.left_leg, R.drawable.right_leg };
 
-
-	
 	private ImageView progressImage;
-
 	private GameManager gm;
+	
+	private ArrayList<TextView> letterBlocks = new ArrayList<TextView>();
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
@@ -49,9 +48,10 @@ public class GameActivity extends Activity {
 			lettersList.add(a);
 		}
 
-
 		Bundle b = getIntent().getExtras();
 		gm.setCorrectWord((String) b.get("Word"));
+		showEmptyLetterBlocks();
+
 		progressImage = (ImageView) findViewById(R.id.progression);
 
 		GridView gv = (GridView) findViewById(R.id.grid_letters);
@@ -61,16 +61,48 @@ public class GameActivity extends Activity {
 		
 	}
 	
-	protected void updateProgress(){
-		int wrongLetters = gm.getWrongLetters().size();
-		if(wrongLetters == hungMen.length){
-			Toast.makeText(this, "GAME OVAH!", Toast.LENGTH_SHORT).show();
-			gm = new GameManager(this);
-		} else if ( wrongLetters > 0 ){
-			progressImage.setImageResource(hungMen[wrongLetters - 1]);
+	protected void showEmptyLetterBlocks()
+	{
+		LinearLayout row = (LinearLayout) findViewById(R.id.correct_letters);
+		for(int i = 0 ; i < gm.getCorrectWord().length(); i++){
+			TextView t = new TextView(this);
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+			layoutParams.setMargins(5, 5, 5, 6);
+			t.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+			t.setPadding(2, 2, 2, 2);
+			t.setGravity(Gravity.CENTER_HORIZONTAL);
+			t.setText(" ");
+			t.setTextSize(30);
+			t.setTextColor(Color.WHITE);
+			letterBlocks.add(t);
+			row.addView(t, layoutParams);
 		}
 	}
-
+	
+	protected void updateLetterBlocks(ArrayList<Integer> indexes, String letter){
+		for(Integer i : indexes){
+			letterBlocks.get(i).setText(letter);
+		}
+		gm.checkGameStatus();
+	}
+	
+	protected void updateProgress(){
+		int wrongLetters = gm.getWrongChosenLetters().size();
+		System.out.println("wrongletters " + wrongLetters);
+		if ( wrongLetters > 0 ){
+			progressImage.setImageResource(hungMen[wrongLetters - 1]);
+		}
+		gm.checkGameStatus();
+	}
+	
+	protected void showWinMessage(){
+		Toast.makeText(this, "YOU GUESSED THE WORD!", Toast.LENGTH_SHORT).show();
+	}
+	
+	protected void showGameOverMessage(){
+		Toast.makeText(this, "Game over, loser!", Toast.LENGTH_SHORT).show();
+	}
 }
 
 class GridAdapter extends ArrayAdapter<String> {
@@ -111,8 +143,6 @@ class GridAdapter extends ArrayAdapter<String> {
 				} else {
 					letter.setBackgroundColor(r.getColor(R.color.dark_grey));
 				}
-				System.out.println("Total chosen letters > "  + gm.getChosenLetters().size());
-				System.out.println("Total wrong letters > " + gm.getWrongLetters().size());
 				
 			}
 		});

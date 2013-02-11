@@ -27,7 +27,7 @@ public final class R {
         public static final int head=0x7f020002;
         public static final int ic_launcher=0x7f020003;
         public static final int left_arm=0x7f020004;
-        public static final int left_left=0x7f020005;
+        public static final int left_leg=0x7f020005;
         public static final int right_arm=0x7f020006;
         public static final int right_leg=0x7f020007;
         public static final int scaffold=0x7f020008;
