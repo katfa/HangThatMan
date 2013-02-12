@@ -59,6 +59,7 @@ public class GameActivity extends FragmentActivity implements GameDialog.GameDia
 	}
 	
 	protected void startNewGame(){
+		removeOldWord();
 		gm.setNewWord();
 		gm.clearGuesses();
 		showEmptyLetterBlocks();
@@ -73,9 +74,14 @@ public class GameActivity extends FragmentActivity implements GameDialog.GameDia
 		gv.setAdapter(adapter);
 	}
 	
+	protected void removeOldWord(){
+		LinearLayout row = (LinearLayout) findViewById(R.id.correct_letters);
+		row.removeViewsInLayout(0, row.getChildCount());
+		letterBlocks = new ArrayList<TextView>();
+	}
+	
 	protected void showEmptyLetterBlocks()
 	{
-		
 		LinearLayout row = (LinearLayout) findViewById(R.id.correct_letters);
 		for(int i = 0 ; i < gm.getCorrectWord().length(); i++){
 			TextView t = new TextView(this);

@@ -37,10 +37,16 @@ public class GameManager{
 	public void setNewWord(){
 		Random randomGenerator = new Random();
 		int x = randomGenerator.nextInt(word_collection.length);
-		correctWord = word_collection[x];
+		if(word_collection[x] != null) {
+			correctWord = word_collection[x]; 
+		}
 		
 		//Word should not be used again in same round
 		word_collection[x] = null;
+		
+		if(correctWord == null){
+			checkGameStatus();
+		}
 	}
 	
 	public String getCorrectWord(){
@@ -84,7 +90,7 @@ public class GameManager{
 	
 	public boolean roundIsOver(){
 		if( wins == numberOfGamesInRound || losses == numberOfGamesInRound
-				|| (wins + losses) == numberOfGamesInRound){
+				|| (wins + losses) == numberOfGamesInRound || correctWord == null ){
 			gameStatus = Status.ROUND_OVER;
 			return true;
 		}
