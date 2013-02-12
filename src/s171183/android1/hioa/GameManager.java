@@ -31,22 +31,42 @@ public class GameManager{
 		defaultLanguage = Locale.getDefault();
 		word_collection = words;
 		numberOfGamesInRound = word_collection.length;
+		gameStatus = Status.IN_PROGRESS;
 
 	}
 	
 	public void setNewWord(){
-		Random randomGenerator = new Random();
-		int x = randomGenerator.nextInt(word_collection.length);
-		if(word_collection[x] != null) {
-			correctWord = word_collection[x]; 
-		}
-		
-		//Word should not be used again in same round
-		word_collection[x] = null;
-		
-		if(correctWord == null){
+		if(wordsLeft()){
+			gameStatus = Status.IN_PROGRESS;
+			Random randomGenerator = new Random();
+			int x;
+			
+			do{
+				x = randomGenerator.nextInt(word_collection.length);
+				correctWord = word_collection[x];
+				
+				System.out.println("index> " + x);
+				System.out.println("word from collection> " + word_collection[x]);
+				System.out.println("correctword variable> " + correctWord);
+				System.out.println("---");
+			}while(word_collection[x] == null);
+			
+			//Word should not be used again in same round
+			word_collection[x] = null;	
+		} else {
 			checkGameStatus();
 		}
+			
+		
+	}
+	
+	public boolean wordsLeft(){
+		for(String s : word_collection){
+			if(s != null){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public String getCorrectWord(){
@@ -71,7 +91,7 @@ public class GameManager{
 		
 	public void checkGameStatus(){
 		if(roundIsOver()){
-			gameActivity.showRoundOverDialog();
+			gameStatus = Status.ROUND_OVER;
 			gameActivity.showGameDialog();
 		}
 		else if(correctWordGuessed()){
@@ -85,16 +105,13 @@ public class GameManager{
 			losses++;
 			gameActivity.updateStats();
 			gameActivity.showGameDialog();
-		}		
+		}	
+
 	}
 	
 	public boolean roundIsOver(){
-		if( wins == numberOfGamesInRound || losses == numberOfGamesInRound
-				|| (wins + losses) == numberOfGamesInRound || correctWord == null ){
-			gameStatus = Status.ROUND_OVER;
-			return true;
-		}
-		else return false;
+		return wins == numberOfGamesInRound || losses == numberOfGamesInRound
+				|| (wins + losses) == numberOfGamesInRound || correctWord == null ;
 		
 		
 	}

@@ -37,6 +37,7 @@ public class GameActivity extends FragmentActivity implements GameDialog.GameDia
 	private TextView wins;
 	private TextView losses;
 	private GameManager gm;
+	private LinearLayout letterBlockRow;
 	
 	private ArrayList<TextView> letterBlocks = new ArrayList<TextView>();
 	
@@ -54,17 +55,23 @@ public class GameActivity extends FragmentActivity implements GameDialog.GameDia
 		wins = (TextView) findViewById(R.id.wins);
 		losses = (TextView) findViewById(R.id.losses);
 		
+		letterBlockRow = (LinearLayout) findViewById(R.id.correct_letters);
+		
 		startNewGame();
 		
 	}
 	
 	protected void startNewGame(){
-		removeOldWord();
+		if(gm.getGameStatus() == Status.ROUND_OVER) {
+			showGameDialog();
+		} else {
 		gm.setNewWord();
-		gm.clearGuesses();
-		showEmptyLetterBlocks();
+		removeOldWord();
+		gm.clearGuesses();	
 		progressImage.setImageResource(R.drawable.scaffold);
 		refreshKeyboard();
+		showEmptyLetterBlocks();
+		}
 	}
 	
 	protected void refreshKeyboard(){
@@ -75,14 +82,13 @@ public class GameActivity extends FragmentActivity implements GameDialog.GameDia
 	}
 	
 	protected void removeOldWord(){
-		LinearLayout row = (LinearLayout) findViewById(R.id.correct_letters);
-		row.removeViewsInLayout(0, row.getChildCount());
+		letterBlockRow.removeViewsInLayout(0, letterBlockRow.getChildCount());
 		letterBlocks = new ArrayList<TextView>();
 	}
 	
 	protected void showEmptyLetterBlocks()
 	{
-		LinearLayout row = (LinearLayout) findViewById(R.id.correct_letters);
+		System.out.println(gm.getCorrectWord());
 		for(int i = 0 ; i < gm.getCorrectWord().length(); i++){
 			TextView t = new TextView(this);
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -95,7 +101,7 @@ public class GameActivity extends FragmentActivity implements GameDialog.GameDia
 			t.setTextSize(30);
 			t.setTextColor(Color.WHITE);
 			letterBlocks.add(t);
-			row.addView(t, layoutParams);
+			letterBlockRow.addView(t, layoutParams);
 		}
 	}
 	
@@ -123,15 +129,16 @@ public class GameActivity extends FragmentActivity implements GameDialog.GameDia
 		DialogFragment gd = new GameDialog(gm, this);
 		gd.show(getSupportFragmentManager(), "Stats");
 	}
-
-	protected void showRoundOverDialog(){
-		Toast.makeText(this, "Round over, loser!", Toast.LENGTH_SHORT).show();
-	}
 	
 
 	@Override
 	public void onDialogPositiveClick(DialogFragment dialog) {
-		startNewGame();
+		if(gm.getGameStatus() != Status.ROUND_OVER){
+			startNewGame();
+		}
+		else {
+			onDialogNegativeClick(dialog);
+		}
 	}
 
 	@Override
