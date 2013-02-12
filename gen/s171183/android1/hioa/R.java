@@ -33,13 +33,15 @@ public final class R {
         public static final int scaffold=0x7f020008;
     }
     public static final class id {
-        public static final int button1=0x7f090004;
+        public static final int button1=0x7f090006;
         public static final int correct_letters=0x7f090001;
         public static final int grid_letters=0x7f090002;
-        public static final int letter=0x7f090005;
-        public static final int menu_settings=0x7f090006;
-        public static final int newGameButton=0x7f090003;
+        public static final int letter=0x7f090007;
+        public static final int losses=0x7f090004;
+        public static final int menu_settings=0x7f090008;
+        public static final int newGameButton=0x7f090005;
         public static final int progression=0x7f090000;
+        public static final int wins=0x7f090003;
     }
     public static final class layout {
         public static final int activity_game=0x7f030000;
@@ -53,11 +55,22 @@ public final class R {
     public static final class string {
         public static final int app_name=0x7f060000;
         public static final int choose_letter=0x7f060006;
+        public static final int exit=0x7f060010;
         public static final int help=0x7f060003;
         public static final int image_description=0x7f060005;
+        public static final int lose=0x7f060009;
+        public static final int losses=0x7f06000a;
         public static final int menu_settings=0x7f060002;
         public static final int new_game=0x7f060001;
+        public static final int play_again=0x7f06000f;
+        public static final int round_over=0x7f06000d;
+        public static final int round_over_title=0x7f06000e;
+        public static final int win=0x7f060007;
+        public static final int wins=0x7f060008;
         public static final int wrong_letters=0x7f060004;
+        public static final int yes=0x7f060011;
+        public static final int you_lose=0x7f06000c;
+        public static final int you_win=0x7f06000b;
     }
     public static final class style {
         /** 

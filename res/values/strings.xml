@@ -8,5 +8,16 @@
     <string name="wrong_letters">Wrong letters:</string>
     <string name="image_description">Scaffold with no body</string>
     <string name="choose_letter">Pick a letter!</string>
+    <string name="win">WIN!</string>
+    <string name="wins">Wins: </string>
+    <string name="lose">OH CRAP!</string>
+    <string name="losses">Losses: </string>
+    <string name="you_win">You guessed the word!</string>
+    <string name="you_lose">You hanged that man!</string>
+    <string name="round_over">You have now played through all the words.</string>
+    <string name="round_over_title">DONE! FINITO!</string>
+    <string name="play_again">Would you like to play again?</string>
+    <string name="exit">Exit game</string>
+    <string name="yes">Yes!</string>
 
 </resources>

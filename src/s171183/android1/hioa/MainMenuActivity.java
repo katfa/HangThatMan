@@ -46,19 +46,9 @@ public class MainMenuActivity extends Activity {
 	public void startNewGame()
 	{
 		Intent intent = new Intent(this, GameActivity.class );
-		Bundle bundle = new Bundle();
-		bundle.putString("Word", getRandomWord());
-		intent.putExtras(bundle);
 		startActivity(intent);
 	}
 	
-	private String getRandomWord()
-	{ 
-		String[] words = getResources().getStringArray(R.array.word_collection);
-		Random randomGenerator = new Random();
-		int x = randomGenerator.nextInt(words.length);
-		return words[x];
-	}
 	
 	
 

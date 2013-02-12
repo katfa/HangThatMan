@@ -2,27 +2,27 @@ package s171183.android1.hioa;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GameActivity extends Activity {
+public class GameActivity extends FragmentActivity implements GameDialog.GameDialogListener {
 
 	private String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I",
 			"J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
@@ -30,10 +30,12 @@ public class GameActivity extends Activity {
 	
 	private ArrayList<String> lettersList = new ArrayList<String>();
 	
-	public static int[] hungMen = { R.drawable.head, R.drawable.body,
+	public int[] hungMen = { R.drawable.head, R.drawable.body,
 			R.drawable.left_arm, R.drawable.right_arm, R.drawable.left_leg, R.drawable.right_leg };
 
 	private ImageView progressImage;
+	private TextView wins;
+	private TextView losses;
 	private GameManager gm;
 	
 	private ArrayList<TextView> letterBlocks = new ArrayList<TextView>();
@@ -42,27 +44,38 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 
-		gm = new GameManager(this);
+		gm = new GameManager(this, hungMen.length, getResources().getStringArray(R.array.word_collection));
 
 		for (String a : alphabet) {
 			lettersList.add(a);
 		}
 
-		Bundle b = getIntent().getExtras();
-		gm.setCorrectWord((String) b.get("Word"));
-		showEmptyLetterBlocks();
-
 		progressImage = (ImageView) findViewById(R.id.progression);
-
+		wins = (TextView) findViewById(R.id.wins);
+		losses = (TextView) findViewById(R.id.losses);
+		
+		startNewGame();
+		
+	}
+	
+	protected void startNewGame(){
+		gm.setNewWord();
+		gm.clearGuesses();
+		showEmptyLetterBlocks();
+		progressImage.setImageResource(R.drawable.scaffold);
+		refreshKeyboard();
+	}
+	
+	protected void refreshKeyboard(){
 		GridView gv = (GridView) findViewById(R.id.grid_letters);
 		ArrayAdapter<String> adapter = new GridAdapter(this,
 				R.layout.grid_content, R.id.letter, lettersList, gm);
 		gv.setAdapter(adapter);
-		
 	}
 	
 	protected void showEmptyLetterBlocks()
 	{
+		
 		LinearLayout row = (LinearLayout) findViewById(R.id.correct_letters);
 		for(int i = 0 ; i < gm.getCorrectWord().length(); i++){
 			TextView t = new TextView(this);
@@ -84,7 +97,6 @@ public class GameActivity extends Activity {
 		for(Integer i : indexes){
 			letterBlocks.get(i).setText(letter);
 		}
-		gm.checkGameStatus();
 	}
 	
 	protected void updateProgress(){
@@ -96,12 +108,31 @@ public class GameActivity extends Activity {
 		gm.checkGameStatus();
 	}
 	
-	protected void showWinMessage(){
-		Toast.makeText(this, "YOU GUESSED THE WORD!", Toast.LENGTH_SHORT).show();
+	protected void updateStats(){
+		wins.setText(getString(R.string.wins) + " " + gm.getWins());
+		losses.setText(getString(R.string.losses) + " " + gm.getLosses());
 	}
 	
-	protected void showGameOverMessage(){
-		Toast.makeText(this, "Game over, loser!", Toast.LENGTH_SHORT).show();
+	protected void showGameDialog(){
+		DialogFragment gd = new GameDialog(gm, this);
+		gd.show(getSupportFragmentManager(), "Stats");
+	}
+
+	protected void showRoundOverDialog(){
+		Toast.makeText(this, "Round over, loser!", Toast.LENGTH_SHORT).show();
+	}
+	
+
+	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		startNewGame();
+	}
+
+	@Override
+	public void onDialogNegativeClick(DialogFragment dialog) {
+		Intent i = new Intent(this, MainMenuActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
 	}
 }
 
