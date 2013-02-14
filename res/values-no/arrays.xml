@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="word_collection">
+        <item>telefon</item>
+        <item>stol</item>
+        <item>bilde</item>
+        <item>hval</item>
+        <item>slette</item>
+        <item>vindu</item>
+        <item>jul</item>
+        <item>leilighet</item>
+        <item>skolisse</item>
+        <item>høyde</item>
+        <item>snål</item>
+        <item>spy</item>
+        <item>popkorn</item>
+        <item>tivoli</item>
+        <item>kostyme</item>
+    </string-array>
+    
+</resources>

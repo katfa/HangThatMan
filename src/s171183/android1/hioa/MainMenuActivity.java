@@ -1,18 +1,17 @@
 package s171183.android1.hioa;
 
-import java.util.Random;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 
-public class MainMenuActivity extends Activity {
+public class MainMenuActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +24,16 @@ public class MainMenuActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				startNewGame();
+			}
+		});
+		
+		Button rules = (Button) findViewById(R.id.rules);
+		rules.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				showRulesDialog();
+				
 			}
 		});
 	}
@@ -47,6 +56,13 @@ public class MainMenuActivity extends Activity {
 	{
 		Intent intent = new Intent(this, GameActivity.class );
 		startActivity(intent);
+	}
+	
+	public void showRulesDialog()
+	{
+		DialogFragment dm = new RulesDialog();
+		dm.show(getSupportFragmentManager(), "Rules");
+		
 	}
 	
 	

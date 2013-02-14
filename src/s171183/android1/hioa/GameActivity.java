@@ -1,6 +1,7 @@
 package s171183.android1.hioa;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +21,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class GameActivity extends FragmentActivity implements GameDialog.GameDialogListener {
 
@@ -28,6 +28,9 @@ public class GameActivity extends FragmentActivity implements GameDialog.GameDia
 			"J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
 			"W", "X", "Y", "Z" };
 	
+	private String[] norwegianLetters = { "Æ", "Ø", "Å" };
+	private final String NORWEGIAN_LOCALE = "NO";
+
 	private ArrayList<String> lettersList = new ArrayList<String>();
 	
 	public int[] hungMen = { R.drawable.head, R.drawable.body,
@@ -49,6 +52,12 @@ public class GameActivity extends FragmentActivity implements GameDialog.GameDia
 
 		for (String a : alphabet) {
 			lettersList.add(a);
+		}
+		
+		if(localeIsNorwegian()){
+			for(String n : norwegianLetters){
+				lettersList.add(n);
+			}
 		}
 
 		progressImage = (ImageView) findViewById(R.id.progression);
@@ -72,6 +81,13 @@ public class GameActivity extends FragmentActivity implements GameDialog.GameDia
 		refreshKeyboard();
 		showEmptyLetterBlocks();
 		}
+	}
+	
+	protected boolean localeIsNorwegian()
+	{
+		String locale = Locale.getDefault().getCountry();
+		System.out.println("Country " + locale);
+		return locale.equals(NORWEGIAN_LOCALE);
 	}
 	
 	protected void refreshKeyboard(){

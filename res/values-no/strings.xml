@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Heng Den Mannen</string>
+    <string name="new_game">Nytt spill</string>
+    <string name="menu_settings">Instillinger</string>
+    <string name="help">Spilleregler</string>
+    <string name="image_description">Stillas uten kropp</string>
+    <string name="win">VINN!</string>
+    <string name="wins">Seier: </string>
+    <string name="lose">Å fillern!</string>
+    <string name="losses">Tap: </string>
+    <string name="you_win">Du gjetta ordet!</string>
+    <string name="you_lose">Du hengte mannen!</string>
+    <string name="round_over">Du har spilt gjennom alle ordene.</string>
+    <string name="round_over_title">FERDIG! FINITO!</string>
+    <string name="play_again">Vil du spille igjen?</string>
+    <string name="exit">Avslutt</string>
+    <string name="yes">JA!</string>
+    <string name="rules_title">Spilleregler</string>
+    <string name="rules">For å vinne skal man gjette hele ordet. Dersom du velger feil bokstav blir mer av tegningen avslørt. 
+        Ordet er like langt som antall svarte firkanter på skjermen. Kos deg!</string>
+    <string name="ok">Okai</string>
+    
+
+</resources>

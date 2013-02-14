@@ -1,23 +1,24 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@color/light_grey"
-    android:orientation="vertical"
     tools:context=".GameActivity" >
 
 	  <ImageView
 	      android:id="@+id/progression"
 	      android:layout_width="wrap_content"
-	      android:layout_height="262dip"
+	      android:layout_height="250dip"
+	      android:layout_alignParentLeft="true"
 	      android:contentDescription="@string/image_description"
 	      android:src="@drawable/scaffold" />
 
 	    <LinearLayout
 	        android:id="@+id/correct_letters"
-	        android:layout_width="fill_parent"
+	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="horizontal" >
+	        android:orientation="horizontal"
+	        android:layout_below="@+id/progression" >
 	    </LinearLayout>
 
     <GridView
@@ -28,14 +29,16 @@
         android:gravity="center"
         android:textSize="10sp"
         android:numColumns="auto_fit"
-        android:stretchMode="columnWidth" >
-    </GridView>
+        android:stretchMode="columnWidth"
+        android:layout_below="@+id/correct_letters">    </GridView>
     
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dip"
+        android:layout_marginBottom="3dip"
+        android:layout_alignParentBottom="true"
         android:background="@color/light_grey">
         
         <TextView 
@@ -57,4 +60,4 @@
         
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -5,9 +5,7 @@
     <string name="new_game">New Game</string>
     <string name="menu_settings">Settings</string>
     <string name="help">How To Play</string>
-    <string name="wrong_letters">Wrong letters:</string>
     <string name="image_description">Scaffold with no body</string>
-    <string name="choose_letter">Pick a letter!</string>
     <string name="win">WIN!</string>
     <string name="wins">Wins: </string>
     <string name="lose">OH CRAP!</string>
@@ -19,5 +17,10 @@
     <string name="play_again">Would you like to play again?</string>
     <string name="exit">Exit game</string>
     <string name="yes">Yes!</string>
+    <string name="rules_title">How to play</string>
+    <string name="rules">To win the game, press letters to guess the word. If you guess a wrong letter, more of the animation will be revealed.
+        The length of the words are the same as the number of black tiles shown. 
+        Green letters are correct, and dark gray letters are not in the word. Have fun! </string>
+    <string name="ok">Okie dokie</string>
 
 </resources>
